@@ -14,3 +14,11 @@ this is a document to play Wordle!
 8. You can use the mouse to click on the letters to guess.
 9. You can use the mouse to click on the keyboard to type your guesses.
 10. You can use the mouse to click on the letters to guess.
+
+## How to clone
+
+1. Clone the repository using the command:
+
+   ```bash
+   git clone
+    ```
