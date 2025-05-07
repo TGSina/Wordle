@@ -22,3 +22,15 @@ this is a document to play Wordle!
    ```bash
    git clone
     ```
+
+## test
+
+1. Run the tests using the command:
+
+   ```bash
+   pytest
+   ```
+
+## sth else
+
+EMPTY
