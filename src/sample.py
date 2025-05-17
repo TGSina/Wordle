@@ -1,0 +1,2 @@
+def sth():
+    pass
