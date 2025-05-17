@@ -3,3 +3,6 @@ def sth():
 
     print("Hi ")
     pass
+
+assert 2 == 1 * 2
+
