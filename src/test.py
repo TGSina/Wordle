@@ -1,13 +1,17 @@
-import json
+from src.utils import generate_word_freq_fa
 
-# Path to the JSON file
-file_path = './src/data/data.json'
+import arabic_reshaper
+from bidi.algorithm import get_display
 
-# Read and load the JSON data
-with open(file_path, 'r', encoding='utf-8') as file:
-    word_fa = json.load(file)
+fa_path = './src/data/persian-wikipedia.txt'
 
-# Print to verify the content
-# print(word_fa)
+faword_list = generate_word_freq_fa(fa_path)
 
-print(len(word_fa['word']))
+# for RTL Persian text support in some terminals:
+for i in range(len(faword_list)):
+    reshaped_text = arabic_reshaper.reshape(faword_list[i])
+    bidi_text = get_display(reshaped_text)
+    faword_list[i] = bidi_text
+
+
+print(faword_list[0:10])
