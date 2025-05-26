@@ -11,7 +11,7 @@ def print_invalid(txt, end="\n"):
     print(colored(f' {txt} ', 'grey', attrs=['reverse', 'bold']), end=end)
 
 
-# Building general data:
+# Building general data for English Words (comma seperated lines)
 def generate_word_freq(file_path, word_count: int = 5, limit: int = 1000):
     words_list_freq = []
 
@@ -37,20 +37,20 @@ def generate_word_freq(file_path, word_count: int = 5, limit: int = 1000):
 
     return words
 
-
-def generate_word_freq_fa(file_path, word_count: int = 5, limit: int = 1000, ignore_lines: int = 20):
+# Building general data for Persian Words (Space seperated lines)
+def generate_word_freq_fa(file_path, word_count: int = 5, limit: int = 1000):
     """
     Generates Persian words from a given .txt file, based on words frequencies.
     """
 
     # Extract words and their frequencies in a list of tuples:
     with open(file_path) as file:
-        counter = 0
         faword_freq_list = []
         
         for line in file:
-            counter += 1
-            if counter <= ignore_lines:
+            
+            # Ignore the first 20 lines of dataset (which are commented)
+            if '#' in line.strip():
                 continue
     
             faword, freq = line.strip().split()

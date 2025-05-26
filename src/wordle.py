@@ -1,5 +1,5 @@
 import random
-# random.seed(42)
+random.seed(42)
 
 from src.utils import print_invalid, print_position_invalid, print_valid
 
