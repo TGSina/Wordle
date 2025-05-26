@@ -1,6 +1,9 @@
 from src.wordle import Wordle
 
-wordle = Wordle('src/data/words_frequency.txt')
+wordle = Wordle(file_path_en='src/data/words_frequency.txt',
+                fila_path_fa='src/data/persian-wikipedia.txt'
+                )
+
 # print(wordle.words)
 wordle.run()
 
