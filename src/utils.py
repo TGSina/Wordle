@@ -3,16 +3,21 @@ from termcolor import colored
 import arabic_reshaper
 from bidi.algorithm import get_display
 
+# Utility functions for Wordle game (e.g., colored printing, RTL text handling)
 def print_valid(txt, end="\n"):
+    """Prints text in green to indicate a correct letter in the correct position."""
     print(colored(f' {txt} ', 'green', attrs=['reverse', 'bold']), end=end)
 
 def print_position_invalid(txt, end="\n"):
+    """Prints text in yellow to indicate a correct letter in the wrong position."""
     print(colored(f' {txt} ', 'blue', attrs=['reverse', 'bold']), end=end)
 
 def print_invalid(txt, end="\n"):
+    """Prints text in red to indicate an incorrect letter."""
     print(colored(f' {txt} ', 'grey', attrs=['reverse', 'bold']), end=end)
 
 def rtl_text(text: str):
+    """Converts text for right-to-left display (for Persian)."""
     text = arabic_reshaper.reshape(text)
     text = get_display(text)
     return text

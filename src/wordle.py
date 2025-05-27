@@ -4,7 +4,17 @@ import random
 from src.utils import print_invalid, print_position_invalid, print_valid, rtl_text
 
 class Wordle:
+    """
+    Main Wordle game class.
+    Handles game logic, word list generation, and user interaction for both English and Persian.
+    """
+
     def __init__(self, file_path_en: str, fila_path_fa: str, word_len: int = 5, limit: int = 1_000, num_try: int = 5):
+        """
+        Initializes the Wordle game.
+        Loads English and Persian word lists from files.
+        """
+        
         self.word_count = word_len
         self.num_try = num_try
         self.words_en = self.generate_word_freq_en(file_path_en, word_count=word_len, limit=limit)
@@ -12,8 +22,12 @@ class Wordle:
 
     # Building general data:
     def generate_word_freq_en(self, file_path, word_count, limit):
+        """
+        Reads English words and their frequencies from a file.
+        Filters and sorts them, then returns a list of words.
+        """
+        
         words_list_freq = []
-
         with open(file_path) as file:
             for line in file:
                 # print(line.strip())
@@ -38,11 +52,12 @@ class Wordle:
 
     def generate_word_freq_fa(self, file_path, word_count, limit):
         """
-        Generates Persian words from a given .txt file, based on words frequencies.
+        Reads Persian words and their frequencies from a file.
+        Filters and sorts them, then returns a list of words.
+        Ignores lines starting with '#' (comments).
         """
 
         faword_freq_list = []
-
         # Extract words and their frequencies in a list of tuples:
         with open(file_path) as file:
 
@@ -71,6 +86,9 @@ class Wordle:
         return fa_words
 
     def run(self, rtl_support: bool = False):
+        """
+        Starts the game and asks the user to choose the language.
+        """
         while True:
             game_language = input("Choose your game language (en/fa): ").strip().lower()
             if game_language == "fa":
@@ -85,6 +103,10 @@ class Wordle:
 
 
     def run_en(self, ):
+        """
+        Runs the English version of the Wordle game.
+        """
+    
         # generate answer
         answer_word = random.choice(self.words_en).upper()
 
@@ -133,6 +155,11 @@ class Wordle:
 
 
     def run_fa(self, rtl_support: bool = False):
+        """
+        Runs the Persian version of the Wordle game.
+        Supports right-to-left (RTL) display if enabled.
+        """
+
         # generate answer
         answer_word = random.choice(self.words_fa).upper()
 
@@ -199,7 +226,7 @@ class Wordle:
                     print_invalid(f"کلمه‌ی درست {answer_word} بود، انشالله دفعه بعد :(")
                 break
 
-
+# Uncomment to run directly
 # if __name__ == '__main__':
 #     wordle = Wordle()
 #     wordle.run()

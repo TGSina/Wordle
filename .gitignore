@@ -1,5 +1,9 @@
-# data/
-# *
-
 *__pycache__/
 *ipynb_checkpoints
+
+test.ipynb
+
+src/test.py
+src/sample.py
+
+src/data/rira-classic-poems.txt
