@@ -1,7 +1,7 @@
 import random
-random.seed(42)
+# random.seed(42)
 
-from src.utils import print_invalid, print_position_invalid, print_valid
+from src.utils import print_invalid, print_position_invalid, print_valid, rtl_text
 
 class Wordle:
     def __init__(self, file_path_en: str, fila_path_fa: str, word_len: int = 5, limit: int = 1_000, num_try: int = 5):
@@ -9,7 +9,6 @@ class Wordle:
         self.num_try = num_try
         self.words_en = self.generate_word_freq_en(file_path_en, word_count=word_len, limit=limit)
         self.words_fa = self.generate_word_freq_fa(fila_path_fa, word_count=word_len, limit=limit)
-
 
     # Building general data:
     def generate_word_freq_en(self, file_path, word_count, limit):
@@ -71,11 +70,11 @@ class Wordle:
 
         return fa_words
 
-    def run(self, ):
+    def run(self, rtl_support: bool = False):
         while True:
             game_language = input("Choose your game language (en/fa): ").strip().lower()
             if game_language == "fa":
-                self.run_fa()
+                self.run_fa(rtl_support=rtl_support)
                 break
             elif game_language == "en":
                 self.run_en()
@@ -133,7 +132,7 @@ class Wordle:
                 break
 
 
-    def run_fa(self, ):
+    def run_fa(self, rtl_support: bool = False):
         # generate answer
         answer_word = random.choice(self.words_fa).upper()
 
@@ -141,15 +140,21 @@ class Wordle:
         try_num = 1
 
         while True:
-            guess = input(f'این تلاش {try_num}ام شماست، لطفا کلمه‌ای {self.word_count} حرفی را وارد کنید (یا برای خروج حرف خ را وارد کنید):').upper()
+
+            if rtl_support:
+                guess = input(rtl_text(f'این تلاش {try_num}ام شماست، لطفا کلمه‌ای {self.word_count} حرفی را وارد کنید (یا برای خروج حرف خ را وارد کنید):')).upper()
+            else:
+                guess = input(f'این تلاش {try_num}ام شماست، لطفا کلمه‌ای {self.word_count} حرفی را وارد کنید (یا برای خروج حرف خ را وارد کنید):').upper()
 
             if guess == "خ":
                 break
 
             # checking word length:
             if len(guess) != self.word_count:
-
-                print("تعداد حروف اشتباه است، دوباره امتحان کن")
+                if rtl_support:
+                    print(rtl_text("تعداد حروف اشتباه است، دوباره امتحان کن"))
+                else:
+                    print("تعداد حروف اشتباه است، دوباره امتحان کن")
                 continue
 
             # # checking if input is a meaningful word:
@@ -161,22 +166,37 @@ class Wordle:
             for g_letter, a_letter in zip(guess, answer_word):
                 # print(g_letter, a_letter)
                 if g_letter == a_letter:
-                    print_valid(g_letter, end=" ")
+                    if rtl_support:
+                        print_valid(rtl_text(g_letter), end=" ")
+                    else:
+                        print_valid(g_letter, end=" ")
                 elif g_letter in answer_word:
-                    print_position_invalid(g_letter, end=" ")
+                    if rtl_support:
+                        print_position_invalid(rtl_text(g_letter), end=" ")
+                    else:
+                        print_position_invalid(g_letter, end=" ")
                 else:
-                    print_invalid(g_letter, end=" ")
+                    if rtl_support:
+                        print_invalid(rtl_text(g_letter), end=" ")
+                    else:
+                        print_invalid(g_letter, end=" ")
 
             print()
 
             # check the success:
             if guess == answer_word:
-                print_valid(f"تو بردی قهرمان! کلمه‌ی هدف {answer_word} بود")
+                if rtl_support:
+                    print_valid(rtl_text(f"تو بردی قهرمان! کلمه‌ی هدف {answer_word} بود"))
+                else:
+                    print_valid(f"تو بردی قهرمان! کلمه‌ی هدف {answer_word} بود")
                 break
 
             try_num += 1
             if try_num > self.num_try:
-                print_invalid(f"کلمه‌ی درست {answer_word} بود، انشالله دفعه بعد :(")
+                if rtl_support:
+                    print_invalid(rtl_text(f"کلمه‌ی درست {answer_word} بود، انشالله دفعه بعد :("))
+                else:
+                    print_invalid(f"کلمه‌ی درست {answer_word} بود، انشالله دفعه بعد :(")
                 break
 
 

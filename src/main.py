@@ -1,11 +1,9 @@
 from src.wordle import Wordle
 
-wordle = Wordle(file_path_en='src/data/words_frequency.txt',
-                fila_path_fa='src/data/persian-wikipedia.txt'
+wordle = Wordle(file_path_en='src/data/words_frequency.txt',    # English words frequency file
+                fila_path_fa='src/data/persian-wikipedia.txt'   # Persian words frequency file
                 )
 
-# print(wordle.words)
-wordle.run()
 
+wordle.run(rtl_support=False) # or wordle.run(rtl_support=True) for RTL support if needed
 
-# https://github.com/behnam/persian-words-frequency

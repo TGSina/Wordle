@@ -1,5 +1,7 @@
 # defining colored prints:
 from termcolor import colored
+import arabic_reshaper
+from bidi.algorithm import get_display
 
 def print_valid(txt, end="\n"):
     print(colored(f' {txt} ', 'green', attrs=['reverse', 'bold']), end=end)
@@ -10,6 +12,10 @@ def print_position_invalid(txt, end="\n"):
 def print_invalid(txt, end="\n"):
     print(colored(f' {txt} ', 'grey', attrs=['reverse', 'bold']), end=end)
 
+def rtl_text(text: str):
+    text = arabic_reshaper.reshape(text)
+    text = get_display(text)
+    return text
 
 # Building general data for English Words (comma seperated lines)
 def generate_word_freq(file_path, word_count: int = 5, limit: int = 1000):
@@ -46,13 +52,13 @@ def generate_word_freq_fa(file_path, word_count: int = 5, limit: int = 1000):
     # Extract words and their frequencies in a list of tuples:
     with open(file_path) as file:
         faword_freq_list = []
-        
+
         for line in file:
-            
+
             # Ignore the first 20 lines of dataset (which are commented)
             if '#' in line.strip():
                 continue
-    
+
             faword, freq = line.strip().split()
             freq = int(freq)
             faword_freq_list.append((faword, freq))
